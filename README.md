@@ -4,14 +4,14 @@ This is a containerized Spring Boot-based e-commerce system with authentication,
 
 ---
 
-## Requirements
+## 🧰 Requirements
 
 - Java 17+
 - Docker + Docker Compose
 
 ---
 
-## How to Run the Application (Docker)
+## ▶️ How to Run the Application (Docker)
 
 1. **Build the JAR**
 
@@ -36,7 +36,7 @@ docker compose up
 
 ---
 
-## Sample Request: Register User
+## 🧪 Sample Request: Register User
 
 **POST** `/auth/register`
 
@@ -50,7 +50,7 @@ docker compose up
 
 ---
 
-## Authentication
+## 🔐 Authentication
 
 All endpoints (except `/auth/register` and `/h2-console/**`) require **Basic Auth**.
 
@@ -62,7 +62,7 @@ curl -u owner1:password http://localhost:8080/products
 
 ---
 
-## Available Endpoints
+## 📦 Available Endpoints
 
 ### 👤 Authentication
 | Method | Endpoint           | Description         |
@@ -71,7 +71,7 @@ curl -u owner1:password http://localhost:8080/products
 
 ---
 
-### Products
+### 🛒 Products
 | Method | Endpoint             | Description                          |
 |--------|----------------------|--------------------------------------|
 | POST   | `/products`          | Add new product (owner only)         |
@@ -82,14 +82,14 @@ curl -u owner1:password http://localhost:8080/products
 
 ---
 
-### Cart
+### 🛍️ Cart
 | Method | Endpoint | Description            |
 |--------|----------|------------------------|
 | POST   | `/cart`  | Add product to cart    |
 
 ---
 
-### Orders
+### 📦 Orders
 | Method | Endpoint         | Description                |
 |--------|------------------|----------------------------|
 | POST   | `/orders`        | Place order (customer)     |
@@ -97,7 +97,7 @@ curl -u owner1:password http://localhost:8080/products
 
 ---
 
-## Features
+## 🧠 Features
 
 - ✅ Spring Security (Basic Auth)
 - ✅ Product CRUD (secured by role)
@@ -108,7 +108,7 @@ curl -u owner1:password http://localhost:8080/products
 
 ---
 
-## Testing
+## 🧪 Testing
 
 - Unit tests for services
 - Integration tests for controllers
@@ -120,9 +120,12 @@ curl -u owner1:password http://localhost:8080/products
 
 ---
 
-## Stopping the App
+## 🧼 Stopping the App
 
 ```bash
 docker compose down
 ```
 
+---
+
+Happy coding! ✨
