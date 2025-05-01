@@ -12,6 +12,9 @@ public class CartService {
     @Autowired private UserRepository userRepository;
     @Autowired private ProductRepository productRepository;
 
+    /**
+     * Adds a product to the authenticated user's cart.
+     */
     public CartItem addToCart(Long productId, int quantity, String username) {
         User user = userRepository.findByUsername(username).orElseThrow();
         Product product = productRepository.findById(productId).orElseThrow();
@@ -20,6 +23,7 @@ public class CartService {
         item.setUser(user);
         item.setProduct(product);
         item.setQuantity(quantity);
+
         return cartItemRepository.save(item);
     }
 }

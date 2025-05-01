@@ -10,17 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    /**
+     * Registers a new user by encoding their password and saving their details to the database.
+     */
     public User register(UserDto dto) {
         User user = new User();
         user.setUsername(dto.getUsername());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setPassword(passwordEncoder.encode(dto.getPassword())); // Securely hash password
         user.setRole(dto.getRole());
+
         return userRepository.save(user);
     }
 }

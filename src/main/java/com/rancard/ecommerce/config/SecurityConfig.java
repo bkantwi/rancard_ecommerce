@@ -16,10 +16,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable()) // Moved to top
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**", "/auth/register").permitAll()
-                        .anyRequest().permitAll()
+
+                        // OWNER-only endpoints
+                        .requestMatchers("/products/**", "/orders/insights").hasRole("OWNER")
+
+                        // CUSTOMER-only endpoints
+                        .requestMatchers("/cart/**", "/orders").hasRole("CUSTOMER")
+
+                        // Everything else
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
