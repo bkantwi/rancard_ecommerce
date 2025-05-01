@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -25,6 +26,17 @@ public class ProductController {
     @GetMapping
     public List<Product> getAll() {
         return productService.getAll();
+    }
+
+    @PutMapping("/{id}")
+    public Product update(@PathVariable Long id, @RequestBody ProductDto dto, Authentication auth) {
+        return productService.updateProduct(id, dto, auth.getName());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id, Authentication auth) {
+        productService.deleteProduct(id, auth.getName());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/stream")

@@ -52,4 +52,32 @@ public class ProductService {
             }
         }
     }
+
+    public Product updateProduct(Long id, ProductDto dto, String username) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Optional: Only allow the product owner to update
+        if (!product.getOwner().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized");
+        }
+
+        product.setName(dto.getName());
+        product.setPrice(dto.getPrice());
+        product.setQuantity(dto.getQuantity());
+
+        return productRepository.save(product);
+    }
+
+    public void deleteProduct(Long id, String username) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        if (!product.getOwner().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized");
+        }
+
+        productRepository.delete(product);
+    }
+
 }
