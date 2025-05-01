@@ -4,10 +4,12 @@ import com.rancard.ecommerce.model.*;
 import com.rancard.ecommerce.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.rancard.ecommerce.dto.ProductInsightDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -36,5 +38,31 @@ public class OrderService {
 
         cartItemRepository.deleteAll(cartItems); // clear cart
         return saved;
+    }
+
+    public List<ProductInsightDto> getInsights() {
+        List<Order> orders = orderRepository.findAll();
+
+        Map<String, ProductInsightDto> metrics = new HashMap<>();
+
+        for (Order order : orders) {
+            for (CartItem item : order.getItems()) {
+                String name = item.getProduct().getName();
+                int quantity = item.getQuantity();
+                BigDecimal revenue = item.getProduct().getPrice().multiply(BigDecimal.valueOf(quantity));
+
+                metrics.compute(name, (k, v) -> {
+                    if (v == null) {
+                        return new ProductInsightDto(name, quantity, revenue);
+                    } else {
+                        v.setTotalSold(v.getTotalSold() + quantity);
+                        v.setTotalRevenue(v.getTotalRevenue().add(revenue));
+                        return v;
+                    }
+                });
+            }
+        }
+
+        return new ArrayList<>(metrics.values());
     }
 }
