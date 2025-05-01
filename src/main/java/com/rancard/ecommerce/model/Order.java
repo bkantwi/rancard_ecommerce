@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 
 @Entity
+//order is a system keyword so I had to make it orders rather
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
