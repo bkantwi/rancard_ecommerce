@@ -125,7 +125,3 @@ curl -u owner1:password http://localhost:8080/products
 ```bash
 docker compose down
 ```
-
----
-
-Happy coding! ✨
