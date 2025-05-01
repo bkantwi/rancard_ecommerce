@@ -19,8 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getRole().replace("ROLE_", "")) // ROLE_USER -> USER
+                .password(user.getPassword()) // This must be the BCrypt-hashed password
+                .roles(user.getRole().replace("ROLE_", "")) // e.g., "ROLE_USER" -> "USER"
                 .build();
     }
 }
